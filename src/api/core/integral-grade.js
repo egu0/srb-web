@@ -7,4 +7,11 @@ export default {
       method: 'get',
     })
   },
+
+  removeById(id) {
+    return request({
+      url: '/admin/core/integralGrade/remove/' + id,
+      method: 'delete',
+    })
+  },
 }
