@@ -43,20 +43,23 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          integralGradeApi.removeById(id).then((res) => {
-            this.$message({
-              showClose: true,
-              message: res.message,
-              type: 'success',
-            })
-            this.fetchData()
-          })
+          return integralGradeApi.removeById(id)
         })
-        .catch(() => {
+        .then((res) => {
           this.$message({
-            type: 'info',
-            message: '已取消删除',
+            showClose: true,
+            message: res.message,
+            type: 'success',
           })
+          this.fetchData()
+        })
+        .catch((err) => {
+          if (err === 'cancel') {
+            this.$message({
+              type: 'info',
+              message: '已取消删除',
+            })
+          }
         })
     },
     fetchData() {
