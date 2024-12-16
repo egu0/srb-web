@@ -43,11 +43,22 @@ export default {
     }
   },
 
+  created() {
+    let id = this.$route.params.id // 编辑时会传递 id，此时需要做数据回显
+    if (id) {
+      this.fetchById(id)
+    }
+  },
+
   methods: {
     saveOrUpdate() {
       this.saveBtnDisabled = true
 
-      this.saveData()
+      if (this.integralGrade.id) {
+        this.updateData() // 包含 id 说明处于回显状态，此时需要更新
+      } else {
+        this.saveData()
+      }
     },
 
     saveData() {
@@ -57,7 +68,18 @@ export default {
       })
     },
 
-    updateData() {},
+    fetchById(id) {
+      integralGradeApi.getById(id).then((res) => {
+        this.integralGrade = res.data.record
+      })
+    },
+
+    updateData() {
+      integralGradeApi.updateById(this.integralGrade).then((res) => {
+        this.$message.success(res.message)
+        this.$router.push('/core/integral-grade/list')
+      })
+    },
   },
 }
 </script>
