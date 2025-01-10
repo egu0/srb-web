@@ -91,6 +91,26 @@ export const constantRoutes = [
   },
 
   {
+    path: '/core',
+    component: Layout,
+    redirect: '/core/dict/list',
+    name: 'coreDict',
+    meta: {
+      title: '系統設置',
+      icon: 'el-icon-setting',
+    },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'dict/list',
+        name: '數據字典',
+        component: () => import('@/views/core/dict/list'),
+        meta: { title: '數據字典' },
+      },
+    ],
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',
