@@ -18,6 +18,23 @@
         導出數據
       </el-button>
     </div>
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+      row-key="id"
+      :border="true"
+      lazy
+      :load="load"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+    >
+      <el-table-column prop="name" label="名稱" width="280"></el-table-column>
+      <el-table-column
+        prop="dictCode"
+        label="編碼"
+        width="280"
+      ></el-table-column>
+      <el-table-column prop="value" label="值"></el-table-column>
+    </el-table>
     <!-- 文件上傳表單 -->
     <el-dialog
       title="數據字典導入"
@@ -50,6 +67,8 @@
 </template>
 
 <script>
+import dictApi from '@/api/core/dict'
+
 export default {
   data() {
     return {
@@ -57,10 +76,30 @@ export default {
       dialogVisible: false,
       // 後端接口地址
       BASE_API: process.env.VUE_APP_BASE_API,
+      // 表格數據
+      tableData: [],
     }
   },
 
+  created() {
+    this.fetchData()
+  },
+
   methods: {
+    // 獲取字典數據
+    fetchData() {
+      dictApi.listByParentId(1).then((res) => {
+        this.tableData = res.data.list
+      })
+    },
+
+    // 動態加載數據
+    load(tree, treeNode, resolve) {
+      dictApi.listByParentId(tree.id).then((res) => {
+        resolve(res.data.list)
+      })
+    },
+
     // 導出數據字典數據
     exportData() {
       window.location.href = this.BASE_API + '/admin/core/dict/export'
@@ -75,6 +114,8 @@ export default {
     fileUploadSuccess(response) {
       if (response.code === 0) {
         this.$message.success('數據導入成功')
+        // 重新加載數據
+        this.fetchData()
         // 導入成功後自動關閉對話框
         this.dialogVisible = false
       } else {
