@@ -9,6 +9,14 @@
       >
         導入 Excel
       </el-button>
+      <el-button
+        @click="exportData"
+        type="primary"
+        size="mini"
+        icon="el-icon-upload2"
+      >
+        導出數據
+      </el-button>
     </div>
     <!-- 文件上傳表單 -->
     <el-dialog
@@ -53,6 +61,11 @@ export default {
   },
 
   methods: {
+    // 導出數據字典數據
+    exportData() {
+      window.location.href = this.BASE_API + '/admin/core/dict/export'
+    },
+
     // 對話框關閉時清空上傳的文件列表
     onDialogClosed() {
       this.$refs.upload.clearFiles()
