@@ -127,6 +127,13 @@
           >
             解鎖
           </el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="showRecentLog(scope.row.id)"
+          >
+            查看登錄日誌
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -142,6 +149,14 @@
       @size-change="changePageSize"
       @current-change="changeCurrentSize"
     ></el-pagination>
+
+    <el-dialog title="最近登錄日誌" :visible.sync="dialogTableVisible">
+      <el-table :data="loginRecordList" height="450">
+        <el-table-column type="index" />
+        <el-table-column property="ip" label="IP 地址" width="150" />
+        <el-table-column property="createTime" label="登錄時間" width="200" />
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -187,6 +202,12 @@ export default {
       userInfoApi.lock(id, status).then((res) => {
         this.$message.success(res.message)
         this.fetchData()
+      })
+    },
+    showRecentLog(userId) {
+      userInfoApi.getUserLoginRecordTop50(userId).then((res) => {
+        this.loginRecordList = res.data.list
+        this.dialogTableVisible = true
       })
     },
   },
