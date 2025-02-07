@@ -109,6 +109,26 @@
           <el-tag v-else type="success" size="mini">正常</el-tag>
         </template>
       </el-table-column>
+      <el-table-column align="center" label="操作" width="200">
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.status == 1"
+            type="danger"
+            size="mini"
+            @click="lock(scope.row.id, 0)"
+          >
+            鎖定
+          </el-button>
+          <el-button
+            v-else
+            type="success"
+            size="mini"
+            @click="lock(scope.row.id, 1)"
+          >
+            解鎖
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <!-- 分頁組件 -->
@@ -116,7 +136,7 @@
       :total="total"
       :current-page="page"
       :page-size="limit"
-      :page-sizes="[1, 2, 3]"
+      :page-sizes="[10, 20, 30]"
       style="padding: 30px 0"
       layout="total, sizes, prev, pager, next, jumper"
       @size-change="changePageSize"
@@ -133,7 +153,7 @@ export default {
       list: null, // 數據
       total: 0, // 數據庫中的總記錄數
       page: 1, // 默認頁碼
-      limit: 2, // 每頁記錄數
+      limit: 10, // 每頁記錄數
       searchObj: {}, // 查詢條件
       loginRecordList: [], // 會員登錄日誌
       dialogTableVisible: false, //對話框是否顯示
@@ -162,6 +182,12 @@ export default {
     changeCurrentSize(newPage) {
       this.page = newPage
       this.fetchData()
+    },
+    lock(id, status) {
+      userInfoApi.lock(id, status).then((res) => {
+        this.$message.success(res.message)
+        this.fetchData()
+      })
     },
   },
 }

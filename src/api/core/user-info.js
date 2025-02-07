@@ -9,4 +9,11 @@ export default {
       params: searchObj,
     })
   },
+
+  lock(id, status) {
+    return request({
+      url: `/admin/core/userInfo/lock/${id}/${status}`,
+      method: 'put',
+    })
+  },
 }
