@@ -116,7 +116,7 @@
       :total="total"
       :current-page="page"
       :page-size="limit"
-      :page-sizes="[10, 20]"
+      :page-sizes="[1, 2, 3]"
       style="padding: 30px 0"
       layout="total, sizes, prev, pager, next, jumper"
       @size-change="changePageSize"
@@ -133,7 +133,7 @@ export default {
       list: null, // 數據
       total: 0, // 數據庫中的總記錄數
       page: 1, // 默認頁碼
-      limit: 10, // 每頁記錄數
+      limit: 2, // 每頁記錄數
       searchObj: {}, // 查詢條件
       loginRecordList: [], // 會員登錄日誌
       dialogTableVisible: false, //對話框是否顯示
@@ -145,6 +145,7 @@ export default {
   methods: {
     resetFrom() {
       this.searchObj = {}
+      this.fetchData()
     },
     fetchData() {
       userInfoApi
@@ -154,8 +155,14 @@ export default {
           this.total = res.data.pageModel.total
         })
     },
-    changePageSize() {},
-    changeCurrentSize() {},
+    changePageSize(newPageSize) {
+      this.limit = newPageSize
+      this.fetchData()
+    },
+    changeCurrentSize(newPage) {
+      this.page = newPage
+      this.fetchData()
+    },
   },
 }
 </script>
