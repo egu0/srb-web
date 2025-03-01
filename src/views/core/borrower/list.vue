@@ -26,16 +26,16 @@
           {{ (page - 1) * limit + scope.$index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column prop="name" label="姓名" width="140"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="120"></el-table-column>
       <el-table-column
         prop="mobile"
         label="手机号"
-        width="140"
+        width="120"
       ></el-table-column>
       <el-table-column
         prop="idCard"
         label="身份证号"
-        width="200"
+        width="180"
       ></el-table-column>
       <el-table-column label="性别">
         <template slot-scope="scope">
@@ -50,16 +50,16 @@
       </el-table-column>
       <el-table-column label="状态" width="100">
         <template slot-scope="scope">
-          <el-tag type="info" size="mini" v-if="scope.row.status === 0">
+          <el-tag type="warning" size="mini" v-if="scope.row.status === 0">
             未认证
           </el-tag>
           <el-tag type="info" size="mini" v-if="scope.row.status === 1">
             认证中
           </el-tag>
-          <el-tag type="info" size="mini" v-if="scope.row.status === 2">
+          <el-tag type="success" size="mini" v-if="scope.row.status === 2">
             认证通过
           </el-tag>
-          <el-tag type="info" size="mini" v-if="scope.row.status === -1">
+          <el-tag type="danger" size="mini" v-if="scope.row.status === -1">
             认证失败
           </el-tag>
         </template>
@@ -69,7 +69,7 @@
         label="申请时间"
         width="160"
       ></el-table-column>
-      <el-table-column width="200" align="center" label="操作">
+      <el-table-column align="center" label="操作">
         <template slot-scope="scope">
           <router-link :to="'/core/borrower/detail/' + scope.row.id">
             <el-button v-if="scope.row.status === 1" type="warning" size="mini">
