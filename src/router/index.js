@@ -141,7 +141,7 @@ export const constantRoutes = [
         meta: { title: '借款人列表' },
       },
       {
-        path: '/detail/:id',
+        path: 'detail/:id',
         name: 'coreBorrowerDetail',
         component: () => import('@/views/core/borrower/detail'),
         meta: { title: '借款人详情' },

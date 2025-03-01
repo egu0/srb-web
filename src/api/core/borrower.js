@@ -8,4 +8,11 @@ export default {
       params: { keyword },
     })
   },
+
+  detail(borrower_id) {
+    return request({
+      url: `/admin/core/borrower/detail/${borrower_id}`,
+      method: 'get',
+    })
+  },
 }
