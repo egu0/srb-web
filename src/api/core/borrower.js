@@ -9,10 +9,18 @@ export default {
     })
   },
 
-  detail(borrower_id) {
+  detail(borrowerId) {
     return request({
-      url: `/admin/core/borrower/detail/${borrower_id}`,
+      url: `/admin/core/borrower/detail/${borrowerId}`,
       method: 'get',
+    })
+  },
+
+  approval(borrowerApproval) {
+    return request({
+      url: '/admin/core/borrower/approval',
+      method: 'post',
+      data: borrowerApproval,
     })
   },
 }

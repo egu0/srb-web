@@ -139,6 +139,53 @@
         <el-button type="primary" @click="back">返回</el-button>
       </el-row>
     </el-form>
+
+    <!-- 审核模版 -->
+    <el-divider v-if="borrower.status === '认证中'"></el-divider>
+    <el-form v-if="borrower.status === '认证中'" label-width="170px">
+      <el-form-item label="是否通过">
+        <el-radio-group v-model="approvalForm.status">
+          <el-radio :label="2">通过</el-radio>
+          <el-radio :label="-1">不通过</el-radio>
+        </el-radio-group>
+      </el-form-item>
+
+      <el-form-item v-if="approvalForm.status === 2" label="基本信息积分">
+        <el-input
+          v-model="approvalForm.infoIntegral"
+          style="width: 140px"
+        ></el-input>
+        <span style="color: indianred">（可获取 30 至 100 积分）</span>
+      </el-form-item>
+
+      <el-form-item v-if="approvalForm.status === 2" label="身份证信息是否正确">
+        <el-radio-group v-model="approvalForm.isIdCardOk">
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
+        </el-radio-group>
+        <span style="color: indianred">（可获得 30 积分）</span>
+      </el-form-item>
+
+      <el-form-item v-if="approvalForm.status === 2" label="车辆信息是否正确">
+        <el-radio-group v-model="approvalForm.isCarOk">
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
+        </el-radio-group>
+        <span style="color: indianred">（可获得 60 积分）</span>
+      </el-form-item>
+
+      <el-form-item v-if="approvalForm.status === 2" label="房产信息是否正确">
+        <el-radio-group v-model="approvalForm.isHouseOk">
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
+        </el-radio-group>
+        <span style="color: indianred">（可获得 100 积分）</span>
+      </el-form-item>
+
+      <el-row style="text-align: center">
+        <el-button type="primary" @click="approvalSubmit()">确定</el-button>
+      </el-row>
+    </el-form>
   </div>
 </template>
 
@@ -179,6 +226,15 @@ export default {
 
     back() {
       this.$router.push({ path: '/core/borrower/list' })
+    },
+
+    approvalSubmit() {
+      this.saveBtnDisabled = true
+      this.approvalForm.borrowerId = this.$route.params.id
+      borrowerApi.approval(this.approvalForm).then((res) => {
+        this.$message.success(res.message)
+        this.$router.push({ path: '/core/borrower/list' })
+      })
     },
   },
 }
