@@ -7,4 +7,11 @@ export default {
       method: 'get',
     })
   },
+
+  detail(lendId) {
+    return request({
+      url: `/admin/core/lend/detail/${lendId}`,
+      method: 'get',
+    })
+  },
 }

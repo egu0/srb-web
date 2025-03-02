@@ -130,8 +130,6 @@ export default {
         },
         borrowerDetail: {},
       },
-      // 防止重复提交
-      saveBtnDisabled: false,
     }
   },
   created() {
