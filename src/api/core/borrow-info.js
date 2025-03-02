@@ -7,4 +7,11 @@ export default {
       method: 'get',
     })
   },
+
+  detail(borrowInfoId) {
+    return request({
+      url: `/admin/core/borrowInfo/detail/${borrowInfoId}`,
+      method: 'get',
+    })
+  },
 }
