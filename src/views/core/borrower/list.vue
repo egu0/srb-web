@@ -69,7 +69,7 @@
         label="申请时间"
         width="160"
       ></el-table-column>
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" label="操作" fixed="right">
         <template slot-scope="scope">
           <router-link :to="'/core/borrower/detail/' + scope.row.id">
             <el-button v-if="scope.row.status === 1" type="warning" size="mini">

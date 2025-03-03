@@ -42,7 +42,7 @@
         label="申请时间"
         width="160"
       ></el-table-column>
-      <el-table-column align="center" label="操作" width="200">
+      <el-table-column align="center" label="操作" width="200" fixed="right">
         <template slot-scope="scope">
           <router-link :to="'/core/borrower/info-detail/' + scope.row.id">
             <el-button type="primary" size="mini">查看</el-button>

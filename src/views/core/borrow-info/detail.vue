@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h4>借款信息</h4>
+    <h3>借款信息</h3>
     <table
       class="table table-striped table-condenseda table-bordered"
       width="100%"
@@ -42,7 +42,7 @@
         </tr>
       </tbody>
     </table>
-    <h4>借款人信息</h4>
+    <h3>借款人信息</h3>
     <table
       class="table table-striped table-condenseda table-bordered"
       width="100%"
@@ -88,9 +88,7 @@
         </tr>
         <tr>
           <th>月收入</th>
-          <td>
-            {{ borrowInfoDetail.borrowerDetail.income }}
-          </td>
+          <td>{{ borrowInfoDetail.borrowerDetail.income }} 元</td>
           <th>还款来源</th>
           <td>
             {{ borrowInfoDetail.borrowerDetail.returnSource }}

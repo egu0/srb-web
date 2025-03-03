@@ -52,23 +52,18 @@
         align="center"
         prop="name"
         label="用戶姓名"
-        width="130"
+        width="120"
       ></el-table-column>
       <el-table-column
         align="center"
         prop="idCard"
         label="身份證號"
+        width="170"
       ></el-table-column>
       <el-table-column
         align="center"
         prop="integral"
         label="用戶積分"
-      ></el-table-column>
-      <el-table-column
-        prop="createTime"
-        label="註冊時間"
-        align="center"
-        width="200"
       ></el-table-column>
       <el-table-column align="center" width="100">
         <template slot-scope="scope" slot="header">
@@ -109,7 +104,13 @@
           <el-tag v-else type="success" size="mini">正常</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="操作" width="200">
+      <el-table-column
+        prop="createTime"
+        label="註冊時間"
+        align="center"
+        width="200"
+      ></el-table-column>
+      <el-table-column align="center" label="操作" width="200" fixed="right">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.status == 1"
