@@ -141,6 +141,30 @@
       <el-table-column prop="investTime" label="投资时间" width="160" />
     </el-table>
 
+    <h4>还款计划</h4>
+    <el-table :data="lendReturnList" stripe style="width: 100%" border>
+      <el-table-column type="index" label="序号" width="70" align="center" />
+      <el-table-column prop="currentPeriod" label="当前的期数" />
+      <el-table-column prop="principal" label="本金" />
+      <el-table-column prop="interest" label="利息" />
+      <el-table-column prop="total" label="本息" />
+      <el-table-column prop="returnDate" label="还款日期" width="150" />
+      <el-table-column prop="realReturnTime" label="实际还款时间" />
+      <el-table-column label="是否逾期">
+        <template slot-scope="scope">
+          <span v-if="scope.row.overdue">
+            是（逾期金额：{{ scope.row.overdueTotal }}元）
+          </span>
+          <span v-else>否</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" width="80">
+        <template slot-scope="scope">
+          {{ scope.row.status === 0 ? '未还款' : '已还款' }}
+        </template>
+      </el-table-column>
+    </el-table>
+
     <el-row style="text-align: center; margin-top: 40px">
       <el-button @click="back()">返回</el-button>
     </el-row>
@@ -150,6 +174,8 @@
 <script>
 import lendApi from '@/api/core/lend'
 import lendItemApi from '@/api/core/lend-item'
+import lendReturnApi from '@/api/core/lend-return'
+
 import '@/styles/show.css'
 
 export default {
@@ -162,6 +188,7 @@ export default {
         borrower: {},
       },
       lendItemList: [], // 标的投资列表
+      lendReturnList: [], // 还款计划
     }
   },
   created() {
@@ -171,6 +198,9 @@ export default {
 
       // 拉取投资列表
       this.fetchLendItemList(id)
+
+      // 拉取还款计划
+      this.fetchLendReturnList(id)
     }
   },
   methods: {
@@ -187,6 +217,12 @@ export default {
     fetchLendItemList(id) {
       lendItemApi.getList(id).then((res) => {
         this.lendItemList = res.data.list
+      })
+    },
+
+    fetchLendReturnList(id) {
+      lendReturnApi.getList(id).then((res) => {
+        this.lendReturnList = res.data.list
       })
     },
   },
