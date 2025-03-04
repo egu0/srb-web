@@ -14,4 +14,11 @@ export default {
       method: 'get',
     })
   },
+
+  makeLoan(lendId) {
+    return request({
+      url: `/admin/core/lend/makeLoan/${lendId}`,
+      method: 'get',
+    })
+  },
 }

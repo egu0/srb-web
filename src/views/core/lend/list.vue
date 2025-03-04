@@ -113,7 +113,28 @@ export default {
       this.page = page
       this.fetchData()
     },
-    makeLoan(id) {},
+    makeLoan(id) {
+      this.$confirm('是否确认放款', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          lendApi.makeLoan(id).then((res) => {
+            this.fetchData()
+            this.$message({
+              type: 'success',
+              message: res.message,
+            })
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消放款',
+          })
+        })
+    },
   },
 }
 </script>
